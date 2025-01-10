@@ -1,6 +1,7 @@
 package com.som.quizApp.Service;
 
 import com.som.quizApp.Entity.Question;
+import com.som.quizApp.Entity.QuestionWrapper;
 import com.som.quizApp.Entity.Quiz;
 import com.som.quizApp.Repository.QuestionRepository;
 import com.som.quizApp.Repository.QuizRepository;
@@ -9,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuizServiceImp implements QuizService{
@@ -36,5 +39,25 @@ public class QuizServiceImp implements QuizService{
         }
         return new ResponseEntity<>("Failed to create quiz", HttpStatus.BAD_REQUEST);
     }
+
+    @Override
+    public ResponseEntity<List<QuestionWrapper>> getQuiz(Integer id) {
+        Optional<Quiz> quizOptional = quizRepository.findById(id);
+        if (quizOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 if the quiz ID does not exist
+        }
+
+        Quiz quiz = quizOptional.get();
+        List<Question> questionsFromDB = quiz.getQuestions();
+        List<QuestionWrapper> questionForUser = new ArrayList<>();
+
+        for (Question q : questionsFromDB) {
+            QuestionWrapper qw = new QuestionWrapper(q.getId(), q.getQuestionTitle(), q.getOption1(), q.getOption2(), q.getOption3(), q.getOption4());
+            questionForUser.add(qw);
+        }
+
+        return new ResponseEntity<>(questionForUser, HttpStatus.OK);
+    }
+
 
 }
