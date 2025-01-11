@@ -3,6 +3,7 @@ package com.som.quizApp.Service;
 import com.som.quizApp.Entity.Question;
 import com.som.quizApp.Entity.QuestionWrapper;
 import com.som.quizApp.Entity.Quiz;
+import com.som.quizApp.Entity.Response;
 import com.som.quizApp.Repository.QuestionRepository;
 import com.som.quizApp.Repository.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,18 @@ public class QuizServiceImp implements QuizService{
         return new ResponseEntity<>(questionForUser, HttpStatus.OK);
     }
 
-
+    @Override
+    public ResponseEntity<Integer> getResult(Integer id, List<Response> responses) {
+        Optional<Quiz> quiz = Optional.of(quizRepository.findById(id).get());
+        List<Question> questionsOftheQuiz = quiz.get().getQuestions();
+        int score = 0;
+        int i = 0;
+        for (Response r : responses) {
+            if(r.getResponse().equals(questionsOftheQuiz.get(i).getRightAnswer())) {
+                score++;
+            }
+            i++;
+        }
+        return new ResponseEntity<>(score, HttpStatus.OK);
+    }
 }
