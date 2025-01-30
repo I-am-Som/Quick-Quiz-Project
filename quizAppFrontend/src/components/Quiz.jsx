@@ -9,8 +9,10 @@ function QuizPage() {
     let [option2,setOption2] = useState("option 2");
     let [option3,setOption3] = useState("option 3");
     let [option4,setOption4] = useState("option 4");
+
+
     return (
-        <div className="h-screen w-screen bg-white flex justify-center items-center">
+        <div className="h-[100%] w-[100%] bg-white flex justify-center items-center">
             <div className="h-[80%] w-[65%] rounded-lg bg-gray-100 border-slate-300 border-[1px] flex flex-col justify-center items-center space-y-3">
                 <h6 className="font-semibold">Question{}</h6>
                 
