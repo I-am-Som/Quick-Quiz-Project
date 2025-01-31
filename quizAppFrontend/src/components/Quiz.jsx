@@ -48,6 +48,11 @@ function QuizPage() {
                     >
                         {option4}
                     </button>
+            <div className="w-full h-20 flex p-7 bg-slate-600 mb-0">
+                <button className="h-[100%] w-auto p-3 bg-yellow-500 rounded-md flex justify-center items-center">
+                    previous
+                </button>
+            </div>
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 function Login() {
-    const imgURL = "https://cdn.pixabay.com/photo/2019/04/30/11/37/quiz-4168371_1280.jpg"; // Replace with a direct image URL
+    const imgURL = "https://cdn.pixabay.com/photo/2019/06/14/09/57/scrabble-4273254_1280.jpg"; // Replace with a direct image URL
     return (
         <div
         style={{
