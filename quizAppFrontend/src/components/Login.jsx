@@ -1,5 +1,5 @@
 function Login() {
-    const imgURL = "https://www.wordforest.org/wp-content/uploads/2023/03/quiz-gda6fb4d78_1280.jpg"; // Replace with a direct image URL
+    const imgURL = "https://cdn.pixabay.com/photo/2019/04/30/11/37/quiz-4168371_1280.jpg"; // Replace with a direct image URL
     return (
         <div
         style={{
