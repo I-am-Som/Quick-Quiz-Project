@@ -9,7 +9,7 @@ import Hero from './components/Hero';
 
 function App() {
   return (
-    <div className="h-screen w-screen bg-yellow-50">
+    <div className="h-screen w-screen bg-[#e6ded6]">
       <BrowserRouter>
         <AppContent />
       </BrowserRouter>

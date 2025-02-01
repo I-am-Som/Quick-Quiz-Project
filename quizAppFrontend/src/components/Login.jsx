@@ -21,7 +21,7 @@ function Login() {
                             type="text"
                             id="username"
                             placeholder="Enter your username"
-                            className="h-10 w-full rounded-[10px] px-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="h-10 w-full rounded-[10px] px-4 border border-[#d9b99b] bg-[#e6ded6]"
                         />
                     </div>
                     <div className="w-[85%]">
@@ -32,12 +32,12 @@ function Login() {
                             type="password"
                             id="password"
                             placeholder="Enter your password"
-                            className="h-10 w-full rounded-[10px] px-4 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="h-10 w-full rounded-[10px] px-4 border border-[#d9b99b] bg-[#e6ded6]"
                         />
                     </div>
                     <button
                         type="submit"
-                        className="h-10 w-[85%] bg-blue-500 text-white rounded-[10px] hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                        className="h-10 w-[85%] bg-[#d9b99b] text-[#4b3b42] rounded-[10px] hover:bg-[#eed9c4] active:text-[#eed9c4] active:bg-[#9c8481]"
                     >
                         Login
                     </button>
