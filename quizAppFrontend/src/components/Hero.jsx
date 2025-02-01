@@ -17,9 +17,9 @@ function Hero() {
           Challenge yourself with quizzes on various topics.
         </p>
         <div className="mt-6 flex justify-center space-x-4">
-          <button className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold text-lg rounded-lg">
+          <Link to="/signup" className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold text-lg rounded-lg">
             Sign Up
-          </button>
+          </Link>
           <Link to="/login" className="px-6 py-3 bg-transparent border-2 border-white hover:bg-white hover:text-black text-white font-semibold text-lg rounded-lg">
             Log In
           </Link>
