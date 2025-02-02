@@ -15,4 +15,6 @@ public interface QuizService {
 
     // New method to get all quizzes for quiz cards
     ResponseEntity<List<QuizDetails>> getAllQuizzes();
+
+    ResponseEntity<List<QuizDetails>> getQuizzesByCategory(String category);
 }
