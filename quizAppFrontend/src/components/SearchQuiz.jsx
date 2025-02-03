@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function QuizSearch() {
   const [quizzes, setQuizzes] = useState([]);
-  const API_URL = "http://localhost:8080/quiz/all"; // Change this to match your backend route
+  const API_URL = "http://localhost:8080/quizdetails/all"; // Updated API URL for fetching all quizzes
 
   useEffect(() => {
     fetch(API_URL)
@@ -18,9 +18,9 @@ function QuizSearch() {
         quizzes.map((quiz) => (
           <QuizDetails
             key={quiz.id}
-            quizname={quiz.title}
+            quizname={quiz.name} // Use 'name' instead of 'title'
             category={quiz.category}
-            numQ={quiz.numQuestions}
+            numQ={quiz.number_of_questions} // Ensure this matches the field name in the backend
           />
         ))
       ) : (
@@ -37,7 +37,7 @@ function QuizDetails({ quizname, category, numQ }) {
       <p>{category}</p>
       <p>{numQ} Questions</p>
       <Link
-        to="/quiz"
+        to="/quiz" // Ensure this route exists in your React app
         className="h-10 w-20 bg-yellow-500 rounded-md flex justify-center items-center hover:bg-black hover:text-white"
       >
         Take Quiz
