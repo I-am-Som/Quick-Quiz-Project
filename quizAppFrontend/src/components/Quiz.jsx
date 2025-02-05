@@ -1,13 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { data } from "react-router-dom";
 
 let imgURL = "https://cdn.pixabay.com/photo/2022/03/15/08/23/pencil-7069760_1280.jpg";
+let API_URL = "http://localhost:8080/questions/allQuestions";
 
 function QuizPage() {
+    let [length, setLength] = useState(0);
+    let [count, setCount] = useState(0);
     let [question, setQuestion] = useState("Your question will be displayed soon");
     let [option1, setOption1] = useState("Option 1");
     let [option2, setOption2] = useState("Option 2");
     let [option3, setOption3] = useState("Option 3");
     let [option4, setOption4] = useState("Option 4");
+
+    useEffect(() => {
+        fetch(API_URL)
+        .then(response => response.json())
+        .then((data) => {
+
+            setLength(data.length);
+            setQuestion(data[count].questionTitle);  // Setting question
+            setOption1(data[count].option1);          // Setting options
+            setOption2(data[count].option2);
+            setOption3(data[count].option3);
+            setOption4(data[count].option4);
+        })
+        .catch();
+    }
+        , [count]);
+    
 
     return (
         <div
@@ -30,7 +51,7 @@ function QuizPage() {
                         <OptionButton option={option4} />
                     </div>
 
-                    <QuizButtons />
+                    <QuizButtons count ={count} setCount = {setCount} length = {length} />
 
                 </div>
             </div>
@@ -71,15 +92,23 @@ function OptionButton({ option }) {
 }
 
 
-function QuizButtons() {
+function QuizButtons({count, setCount, length}) {
     return (
         <div className="w-full flex justify-between">
             <button className="h-[40px] w-[80px] p-3 bg-[#D4A60B] text-white rounded-md 
-                            flex justify-center items-center hover:bg-[#C08A00] ml-5">
+                            flex justify-center items-center hover:bg-[#C08A00] ml-5"
+                            onClick={() => {
+                                if(count > 0) {
+                                    setCount(count - 1)}}
+                                }>
                 Prev
             </button>
             <button className="h-[40px] w-[80px] p-3 bg-[#D4A60B] text-white rounded-md 
-                            flex justify-center items-center hover:bg-[#C08A00] mr-5">
+                            flex justify-center items-center hover:bg-[#C08A00] mr-5"
+                            onClick={() => {
+                                if(count < length-1) {
+                                    setCount(count + 1)}}
+                                }>
                 Next
             </button>
         </div>
