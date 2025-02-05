@@ -20,7 +20,7 @@ function Nav() {
             {/* Navigation Links */}
             <div className="ml-16 flex h-full items-center space-x-6">
                 <Link
-                    to="/home"
+                    to="/"
                     className="h-full flex justify-center items-center p-3 text-slate-800 hover:bg-yellow-400 hover:text-slate-700 active:bg-slate-950 transition-all"
                 >
                     <p className="font-semibold">Home</p>

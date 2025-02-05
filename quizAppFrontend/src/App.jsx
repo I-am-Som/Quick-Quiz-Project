@@ -43,7 +43,7 @@ function AppContent() {
       <>
         <Nav />
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/searchquiz" element={<SearchQuiz />} />
           {/* <Route path="/score" element={<Score />} />
           <Route path="/savedtest" element={<SavedTest />} /> */}
