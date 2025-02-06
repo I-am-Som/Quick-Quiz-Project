@@ -1,8 +1,5 @@
 package com.som.quizApp.Repository;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.som.quizApp.Entity.Question;
-import org.hibernate.mapping.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

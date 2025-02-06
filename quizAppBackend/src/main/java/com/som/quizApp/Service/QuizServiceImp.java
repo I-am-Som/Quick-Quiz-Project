@@ -1,9 +1,5 @@
 package com.som.quizApp.Service;
 
-import com.som.quizApp.Entity.Question;
-import com.som.quizApp.Entity.QuestionWrapper;
-import com.som.quizApp.Entity.Quiz;
-import com.som.quizApp.Entity.QuizDetails;
 import com.som.quizApp.Entity.Response;
 import com.som.quizApp.Repository.QuestionRepository;
 import com.som.quizApp.Repository.QuizRepository;

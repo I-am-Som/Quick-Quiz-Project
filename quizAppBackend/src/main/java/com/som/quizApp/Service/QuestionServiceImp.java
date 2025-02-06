@@ -1,6 +1,5 @@
 package com.som.quizApp.Service;
 
-import com.som.quizApp.Entity.Question;
 import com.som.quizApp.Repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

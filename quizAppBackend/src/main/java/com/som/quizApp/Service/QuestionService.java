@@ -1,6 +1,5 @@
 package com.som.quizApp.Service;
 
-import com.som.quizApp.Entity.Question;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

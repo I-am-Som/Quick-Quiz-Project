@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function QuizSearch() {
   const [quizzes, setQuizzes] = useState([]);
-  const API_URL = "http://localhost:8080/quizdetails/all"; // Updated API URL for fetching all quizzes
+  const API_URL = "http://localhost:8080/quizdetails/all";
 
   useEffect(() => {
     fetch(API_URL)
@@ -13,32 +13,36 @@ function QuizSearch() {
   }, []);
 
   return (
-    <div className="h-full w-full flex flex-wrap justify-center items-center gap-4">
-      {quizzes.length > 0 ? (
-        quizzes.map((quiz) => (
-          <QuizDetails
-            key={quiz.id}
-            quizname={quiz.name} // Use 'name' instead of 'title'
-            category={quiz.category}
-            numQ={quiz.number_of_questions} // Ensure this matches the field name in the backend
-          />
-        ))
-      ) : (
-        <p className="text-gray-600">No quizzes available</p>
-      )}
+    <div className="fixed top-0 left-0 w-screen h-screen bg-gray-900 bg-opacity-90 flex flex-col pt-[60px] overflow-auto">
+      <div className="flex flex-wrap justify-center items-center gap-6 p-4">
+        {quizzes.length > 0 ? (
+          quizzes.map((quiz) => (
+            <QuizDetails
+              key={quiz.id}
+              quizname={quiz.name}
+              category={quiz.category}
+              numQ={quiz.number_of_questions}
+            />
+          ))
+        ) : (
+          <p className="text-gray-200 text-lg">No quizzes available</p>
+        )}
+      </div>
     </div>
   );
 }
 
 function QuizDetails({ quizname, category, numQ }) {
   return (
-    <div className="h-[180px] w-[320px] rounded-lg bg-slate-50/50 backdrop-blur-sm flex flex-col justify-center items-center font-semibold font-sans text-md shadow-md">
-      <p>{quizname}</p>
-      <p>{category}</p>
-      <p>{numQ} Questions</p>
+    <div className="w-[220px] h-[280px] rounded-lg bg-yellow-50/90 backdrop-blur-md flex flex-col justify-between items-center p-6 shadow-lg border border-gray-200">
+      <div className="text-center">
+        <p className="text-xl font-bold text-gray-800">{quizname}</p>
+        <p className="text-md text-gray-600">Category: {category}</p>
+        <p className="text-md text-gray-500">{numQ} Questions</p>
+      </div>
       <Link
-        to="/quiz" // Ensure this route exists in your React app
-        className="h-10 w-20 bg-yellow-500 rounded-md flex justify-center items-center hover:bg-black hover:text-white"
+        to="/quiz"
+        className="px-5 py-2 bg-yellow-500 rounded-lg text-white font-semibold hover:bg-yellow-600 transition duration-200"
       >
         Take Quiz
       </Link>

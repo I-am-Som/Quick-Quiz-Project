@@ -1,6 +1,5 @@
 package com.som.quizApp.Repository;
 
-import com.som.quizApp.Entity.QuizDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
