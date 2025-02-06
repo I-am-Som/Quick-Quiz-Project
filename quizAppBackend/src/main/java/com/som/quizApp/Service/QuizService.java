@@ -1,20 +1,23 @@
 package com.som.quizApp.Service;
 
-import com.som.quizApp.Entity.*;
+import com.som.quizApp.Entity.Question;
+import com.som.quizApp.Entity.Response;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface QuizService {
 
-    ResponseEntity<String> createQuiz(String category, int numQ, String title);
+    ResponseEntity<String> createQuiz(String category, int numQ, String title, String difficulty);
 
-    ResponseEntity<List<QuestionWrapper>> getQuiz(Integer id);
+    ResponseEntity<List<Question>> getQuiz(Integer id);
 
-    ResponseEntity<Integer> getResult(Integer id, List<Response> responses);
+//    ResponseEntity<Integer> getResult(Integer id, List<Response> responses);
 
-    // New method to get all quizzes for quiz cards
-    ResponseEntity<List<QuizDetails>> getAllQuizzes();
+    ResponseEntity<String> saveQuizDetails(String category, String name, Integer numberOfQuestions, String difficulty);
 
-    ResponseEntity<List<QuizDetails>> getQuizzesByCategory(String category);
+    ResponseEntity<List<Map<String, Object>>> getAllQuizzes();  // Updated: Return simplified quiz details
+
+    ResponseEntity<List<Map<String, Object>>> getQuizzesByCategory(String category);
 }

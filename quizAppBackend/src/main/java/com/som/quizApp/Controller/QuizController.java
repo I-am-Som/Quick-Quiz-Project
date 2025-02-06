@@ -1,5 +1,6 @@
 package com.som.quizApp.Controller;
 
+import com.som.quizApp.Entity.Question;
 import com.som.quizApp.Entity.Response;
 import com.som.quizApp.Service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("quiz")
+@RequestMapping("/quiz")
 public class QuizController {
 
     private final QuizService quizService;
@@ -19,23 +20,27 @@ public class QuizController {
         this.quizService = quizService;
     }
 
-    @GetMapping("all")
-    public ResponseEntity<List<QuizDetails>> getAllQuizzes() {
-        return quizService.getAllQuizzes();
+    // ✅ Create a new quiz
+    @PostMapping("/create")
+    public ResponseEntity<String> createQuiz(
+            @RequestParam String category,
+            @RequestParam int numQ,
+            @RequestParam String title,
+            @RequestParam String difficulty) {
+        return quizService.createQuiz(category, numQ, title, difficulty);
     }
 
-    @PostMapping("create")
-    ResponseEntity<String> createQuiz(@RequestParam String category, @RequestParam int numQ, @RequestParam String title) {
-        return quizService.createQuiz(category, numQ, title);
-    }
-
-    @GetMapping("get/{id}")
-    ResponseEntity<List<QuestionWrapper>> getQuiz(@PathVariable Integer id) {
+    // ✅ Get quiz questions by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<List<Question>> getQuiz(@PathVariable Integer id) {
         return quizService.getQuiz(id);
     }
 
-    @PostMapping("submit/{id}")
-    ResponseEntity<Integer> submitQuiz(@PathVariable Integer id, @RequestBody List<Response> responses) {
-        return quizService.getResult(id, responses);
-    }
+//    // ✅ Submit quiz responses and get the score
+//    @PostMapping("/submit/{id}")
+//    public ResponseEntity<Integer> submitQuiz(
+//            @PathVariable Integer id,
+//            @RequestBody List<Response> responses) {
+//        return quizService.getResult(id, responses);
+//    }
 }
