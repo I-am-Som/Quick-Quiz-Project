@@ -36,11 +36,11 @@ public class QuizController {
         return quizService.getQuiz(id);
     }
 
-//    // ✅ Submit quiz responses and get the score
-//    @PostMapping("/submit/{id}")
-//    public ResponseEntity<Integer> submitQuiz(
-//            @PathVariable Integer id,
-//            @RequestBody List<Response> responses) {
-//        return quizService.getResult(id, responses);
-//    }
+    // ✅ Submit quiz responses and get the score
+    @PostMapping("/submit/{id}")
+    public ResponseEntity<Integer> submitQuiz(
+            @PathVariable Integer id,
+            @RequestBody List<Response> responses) {
+        return quizService.getResult(id, responses);
+    }
 }

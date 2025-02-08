@@ -1,42 +1,38 @@
-    package com.som.quizApp.Entity;
+package com.som.quizApp.Entity;
 
-    public class Response {
+public class Response {
+    private Integer questionId;     // Identifies the specific question
+    private String selectedAnswer;  // Stores the user's selected answer
 
-        Integer id;
-        String response;
-
-        public Response() {
-        }
-
-        public Response(Integer id, String response) {
-            this.id = id;
-            this.response = response;
-        }
-
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
-        }
-
-        public String getResponse() {
-            return response;
-        }
-
-        public void setResponse(String response) {
-            this.response = response;
-        }
-
-        @Override
-        public String toString() {
-            return "Response{" +
-                    "id=" + id +
-                    ", response='" + response + '\'' +
-                    '}';
-        }
-
-//        public Integer getQuestionId() {
-//        }
+    public Response() {
     }
+
+    public Response(Integer questionId, String selectedAnswer) {
+        this.questionId = questionId;
+        this.selectedAnswer = selectedAnswer;
+    }
+
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
+
+    public String getSelectedAnswer() {
+        return selectedAnswer;
+    }
+
+    public void setSelectedAnswer(String selectedAnswer) {
+        this.selectedAnswer = selectedAnswer;
+    }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "questionId=" + questionId +
+                ", selectedAnswer='" + selectedAnswer + '\'' +
+                '}';
+    }
+}

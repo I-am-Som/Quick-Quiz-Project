@@ -1,5 +1,16 @@
+import { useState } from "react";
+
 function Login() {
     const imgURL = "https://cdn.pixabay.com/photo/2019/06/14/09/57/scrabble-4273254_1280.jpg"; 
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        console.log("Email:", email);
+        console.log("Password:", password);
+    };
 
     return (
         <div 
@@ -15,13 +26,15 @@ function Login() {
             <div className="relative z-10 h-[65%] w-[30%] max-w-[450px] rounded-xl bg-white/10 backdrop-blur-xl shadow-2xl flex flex-col justify-center items-center gap-6 p-8 border border-white/20">
                 <h2 className="text-2xl font-semibold text-white">Welcome Back</h2>
 
-                <form className="w-full flex flex-col items-center gap-5" onSubmit={(e) => e.preventDefault()}>
+                <form className="w-full flex flex-col items-center gap-5" onSubmit={handleLogin}>
                     <div className="w-[85%]">
-                        <label htmlFor="username" className="sr-only">Username</label>
+                        <label htmlFor="email" className="sr-only">Email</label>
                         <input
-                            type="text"
-                            id="username"
-                            placeholder="Enter your username"
+                            type="email"
+                            id="email"
+                            placeholder="Enter your registered e-mail"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             className="h-12 w-full rounded-lg px-4 border border-gray-300 bg-white/20 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 shadow-md placeholder-gray-300"
                         />
                     </div>
@@ -31,6 +44,8 @@ function Login() {
                             type="password"
                             id="password"
                             placeholder="Enter your password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             className="h-12 w-full rounded-lg px-4 border border-gray-300 bg-white/20 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 shadow-md placeholder-gray-300"
                         />
                     </div>

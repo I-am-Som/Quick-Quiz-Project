@@ -1,6 +1,8 @@
 package com.som.quizApp.Service;
 
-import com.som.quizApp.Entity.*;
+import com.som.quizApp.Entity.Question;
+import com.som.quizApp.Entity.Quiz;
+import com.som.quizApp.Entity.Response;
 import com.som.quizApp.Repository.QuestionRepository;
 import com.som.quizApp.Repository.QuizRepository;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,14 @@ public class QuizServiceImp implements QuizService {
     @Override
     public ResponseEntity<String> createQuiz(String category, int numQ, String title, String difficulty) {
         List<Question> questions = questionRepository.getQuestionsByCategory(category, numQ, difficulty);
+
+        // If not enough questions are found, try getting additional ones without difficulty filter
+        if (questions.size() < numQ) {
+            int remainingQuestions = numQ - questions.size();
+            List<Question> additionalQuestions = questionRepository.getQuestionsByCategoryWithoutDifficulty(category, remainingQuestions);
+            questions.addAll(additionalQuestions);
+        }
+
         if (questions.isEmpty()) {
             return new ResponseEntity<>("No questions available for this category.", HttpStatus.NOT_FOUND);
         }
@@ -32,7 +42,7 @@ public class QuizServiceImp implements QuizService {
         quiz.setTitle(title);
         quiz.setCategory(category);
         quiz.setDifficulty(difficulty);
-        quiz.setNumberOfQuestions(numQ);
+        quiz.setNumberOfQuestions(questions.size());  // Update count in case fewer questions were fetched
         quiz.setQuestions(questions);
         quizRepository.save(quiz);
 
@@ -41,41 +51,42 @@ public class QuizServiceImp implements QuizService {
 
     @Override
     public ResponseEntity<List<Question>> getQuiz(Integer id) {
-        // Fetch the Quiz by id from the repository
         Optional<Quiz> quizOptional = quizRepository.findById(id);
 
-        // Check if the Quiz is present
         if (quizOptional.isPresent()) {
-            Quiz quiz = quizOptional.get();
-            // Return the questions associated with the quiz
-            return new ResponseEntity<>(quiz.getQuestions(), HttpStatus.OK);
+            return new ResponseEntity<>(quizOptional.get().getQuestions(), HttpStatus.OK);
         } else {
-            // Return a NOT_FOUND response if the Quiz is not found
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    @Override
+    public ResponseEntity<Integer> getResult(Integer id, List<Response> responses) {
+        Optional<Quiz> quizOptional = quizRepository.findById(id);
+        if (quizOptional.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-//    @Override
-//    public ResponseEntity<Integer> getResult(Integer id, List<Response> responses) {
-//        Optional<Quiz> quizOptional = quizRepository.findById(id);
-//        if (quizOptional.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//
-//        List<Question> questionsOfQuiz = quizOptional.get().getQuestions();
-//        int score = (int) responses.stream()
-//                .filter(response -> questionsOfQuiz.stream()
-//                        .anyMatch(q -> q.getId().equals(response.getQuestionId()) &&
-//                                q.getRightAnswer().equals(response.getResponse())))
-//                .count();
-//
-//        return new ResponseEntity<>(score, HttpStatus.OK);
-//    }
+        List<Question> questionsOfQuiz = quizOptional.get().getQuestions();
+        int score = (int) responses.stream()
+                .filter(response -> questionsOfQuiz.stream()
+                        .anyMatch(q -> q.getId().equals(response.getQuestionId()) &&
+                                q.getRightAnswer().equals(response.getSelectedAnswer())))  // Updated to match Response entity
+                .count();
+
+        return new ResponseEntity<>(score, HttpStatus.OK);
+    }
 
     @Override
-    public ResponseEntity<String> saveQuizDetails(String category, String name, Integer numberOfQuestions, String difficulty) {
-        return null;
+    public ResponseEntity<String> saveQuizDetails(String category, String title, Integer numberOfQuestions, String difficulty) {
+        Quiz quiz = new Quiz();
+        quiz.setTitle(title);
+        quiz.setCategory(category);
+        quiz.setDifficulty(difficulty);
+        quiz.setNumberOfQuestions(numberOfQuestions);
+        quizRepository.save(quiz);
+
+        return new ResponseEntity<>("Quiz details saved successfully!", HttpStatus.CREATED);
     }
 
     @Override

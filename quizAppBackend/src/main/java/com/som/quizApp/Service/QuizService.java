@@ -13,7 +13,7 @@ public interface QuizService {
 
     ResponseEntity<List<Question>> getQuiz(Integer id);
 
-//    ResponseEntity<Integer> getResult(Integer id, List<Response> responses);
+    ResponseEntity<Integer> getResult(Integer id, List<Response> responses);
 
     ResponseEntity<String> saveQuizDetails(String category, String name, Integer numberOfQuestions, String difficulty);
 
