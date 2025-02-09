@@ -6,10 +6,25 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        console.log("Email:", email);
-        console.log("Password:", password);
+
+        const response = await fetch("http://localhost:8080/user/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+        
+        if (response.ok) {
+            alert("Login successful!");
+            console.log("User Data:", data);
+        } else {
+            alert(data.message || "Invalid email or password!");
+        }
     };
 
     return (

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -16,19 +17,25 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> loginData) {
+        String email = loginData.get("email");
+        String password = loginData.get("password");
+
         Optional<User> userOptional = userService.findByEmail(email);
 
-        if (userOptional.isEmpty()) {
-            return ResponseEntity.status(404).body("User not found");
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            if (user.getPassword().equals(password)) {
+                return ResponseEntity.ok(Map.of(
+                        "message", "Login successful",
+                        "userId", user.getUserId(),
+                        "userName", user.getUserName(),
+                        "userGmail", user.getUserGmail()
+                ));
+            } else {
+                return ResponseEntity.status(401).body(Map.of("message", "Incorrect password"));
+            }
         }
-
-        User user = userOptional.get();
-
-        if (!user.getPassword().equals(password)) {
-            return ResponseEntity.status(401).body("Invalid password");
-        }
-
-        return ResponseEntity.ok("Login successful");
+        return ResponseEntity.status(404).body(Map.of("message", "User not found"));
     }
 }
