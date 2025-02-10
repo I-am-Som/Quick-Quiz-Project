@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 function Login() {
     const imgURL = "https://cdn.pixabay.com/photo/2019/06/14/09/57/scrabble-4273254_1280.jpg"; 
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -20,8 +22,13 @@ function Login() {
         const data = await response.json();
         
         if (response.ok) {
-            alert("Login successful!");
-            console.log("User Data:", data);
+            
+            
+            // Store user data in localStorage or state if needed
+            localStorage.setItem("user", JSON.stringify(data));
+
+            // Redirect to home page
+            navigate("/"); 
         } else {
             alert(data.message || "Invalid email or password!");
         }
@@ -77,7 +84,7 @@ function Login() {
                     <a href="#" className="hover:underline">Forgot Password?</a>
                 </div>
             </div>
-        </div>
+        </div>  
     );
 }
 

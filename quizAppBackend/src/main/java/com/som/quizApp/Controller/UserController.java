@@ -16,6 +16,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // ✅ Login Endpoint
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody Map<String, String> loginData) {
         String email = loginData.get("email");
@@ -35,6 +36,32 @@ public class UserController {
             } else {
                 return ResponseEntity.status(401).body(Map.of("message", "Incorrect password"));
             }
+        }
+        return ResponseEntity.status(404).body(Map.of("message", "User not found"));
+    }
+
+    // ✅ Register (Sign-up) Endpoint
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
+        try {
+            User newUser = userService.registerUser(user);
+            return ResponseEntity.ok(Map.of(
+                    "message", "User registered successfully",
+                    "userId", newUser.getUserId(),
+                    "userName", newUser.getUserName(),
+                    "userGmail", newUser.getUserGmail()
+            ));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(400).body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    // ✅ Get Username by User ID
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUserName(@PathVariable String userId) {
+        Optional<User> userOptional = userService.findById(userId);
+        if (userOptional.isPresent()) {
+            return ResponseEntity.ok(Map.of("userName", userOptional.get().getUserName()));
         }
         return ResponseEntity.status(404).body(Map.of("message", "User not found"));
     }

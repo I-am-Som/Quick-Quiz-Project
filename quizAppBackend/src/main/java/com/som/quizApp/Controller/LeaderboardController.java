@@ -1,8 +1,9 @@
 package com.som.quizApp.Controller;
 
-import com.som.quizApp.Entity.Leaderboard;
-import com.som.quizApp.Service.LeaderboardService;
+import com.som.quizApp.Entity.User;
+import com.som.quizApp.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,17 +13,12 @@ import java.util.List;
 public class LeaderboardController {
 
     @Autowired
-    private LeaderboardService leaderboardService;
+    private UserService userService;
 
-    @GetMapping("/get")
-    public List<Leaderboard> getLeaderboard() {
-        return leaderboardService.getLeaderboard().getBody();
-    }
-
-    @PostMapping("/add")
-    public String addScore(@RequestParam String name,
-                           @RequestParam String country,
-                           @RequestParam int score) {
-        return leaderboardService.addScore(name, country, score).getBody();
+    // ✅ Fetch the leaderboard
+    @GetMapping
+    public ResponseEntity<List<User>> getLeaderboard() {
+        List<User> leaderboard = userService.getLeaderboard();
+        return ResponseEntity.ok(leaderboard);
     }
 }
