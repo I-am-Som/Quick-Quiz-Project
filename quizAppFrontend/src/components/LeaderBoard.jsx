@@ -13,13 +13,11 @@ function Leaderboard() {
     fetch(API_URL)
       .then((response) => response.json())
       .then((data) => {
-        // Sort leaderboard by score in descending order
-        const sortedData = data.sort((a, b) => b.score - a.score);
-        setLeaderboard(sortedData);
-        setFilteredLeaderboard(sortedData);
+        setLeaderboard(data);
+        setFilteredLeaderboard(data);
 
-        // Find the current user in the leaderboard
-        const user = sortedData.find((player) => player.userId === CURRENT_USER_ID);
+        // Find current user from leaderboard
+        const user = data.find((player) => player.userId === CURRENT_USER_ID);
         if (user) setCurrentUser(user);
       })
       .catch((error) => console.error("Error fetching leaderboard:", error));
@@ -38,22 +36,17 @@ function Leaderboard() {
     );
   };
 
-  // Get current user rank from the full leaderboard
-  const currentUserRank =
-    currentUser && leaderboard.findIndex((player) => player.userId === currentUser.userId) + 1;
-
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen flex bg-[#FFF9C4]">
+    <div className="fixed top-0 left-0 w-screen h-screen flex bg-[#FFF9C4] overflow-hidden">
       {/* Left Sidebar - Current User Stats */}
       <div className="w-1/4 bg-[#FFECB3] p-6 shadow-md flex flex-col items-center">
         <h3 className="text-[#4E342E] text-2xl font-bold mb-4">Your Stats</h3>
         {currentUser ? (
           <div className="bg-[#FFF176] p-4 rounded-lg w-full text-center shadow-md">
-            <p className="text-[#6D4C41] font-semibold">Rank: {currentUserRank}</p>
-            <p className="text-[#6D4C41] font-semibold">Name: {currentUser.userName}</p>
-            <p className="text-[#6D4C41] font-bold text-xl mt-2">Score: {currentUser.score}</p>
-            <p className="text-[#6D4C41] font-semibold">Country: {currentUser.country}</p>
             <p className="text-[#6D4C41] font-semibold">User ID: {currentUser.userId}</p>
+            <p className="text-[#6D4C41] font-semibold">Username: {currentUser.userName}</p>
+            <p className="text-[#6D4C41] font-semibold">Country: {currentUser.country}</p>
+            <p className="text-[#6D4C41] font-bold text-xl mt-2">Score: {currentUser.score}</p>
           </div>
         ) : (
           <p className="text-[#6D4C41] font-semibold">User stats not available</p>
@@ -61,9 +54,9 @@ function Leaderboard() {
       </div>
 
       {/* Main Leaderboard Section */}
-      <div className="w-2/4 flex flex-col pt-[60px] px-4 overflow-auto">
+      <div className="w-2/4 flex flex-col pt-[60px] px-4 overflow-auto ">
         <h2 className="text-[#795548] text-3xl font-bold text-center mb-6">Leaderboard</h2>
-        <div className="bg-[#FFF59D] rounded-lg overflow-hidden shadow-lg">
+        <div className="bg-[#FFF59D] rounded-lg p-0 overflow-x-auto shadow-lg">
           {filteredLeaderboard.length > 0 ? (
             <table className="w-full text-left border-collapse">
               <thead className="sticky top-0 bg-[#FFD54F] shadow-md">
