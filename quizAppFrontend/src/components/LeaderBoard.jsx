@@ -37,68 +37,71 @@ function Leaderboard() {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen flex bg-[#FFF9C4] overflow-hidden">
-      {/* Left Sidebar - Current User Stats */}
-      <div className="w-1/4 bg-[#FFECB3] p-6 shadow-md flex flex-col items-center">
-        <h3 className="text-[#4E342E] text-2xl font-bold mb-4">Your Stats</h3>
-        {currentUser ? (
-          <div className="bg-[#FFF176] p-4 rounded-lg w-full text-center shadow-md">
-            <p className="text-[#6D4C41] font-semibold">User ID: {currentUser.userId}</p>
-            <p className="text-[#6D4C41] font-semibold">Username: {currentUser.userName}</p>
-            <p className="text-[#6D4C41] font-semibold">Country: {currentUser.country}</p>
-            <p className="text-[#6D4C41] font-bold text-xl mt-2">Score: {currentUser.score}</p>
-          </div>
-        ) : (
-          <p className="text-[#6D4C41] font-semibold">User stats not available</p>
-        )}
-      </div>
-
-      {/* Main Leaderboard Section */}
-      <div className="w-2/4 flex flex-col pt-[60px] px-4 overflow-auto ">
-        <h2 className="text-[#795548] text-3xl font-bold text-center mb-6">Leaderboard</h2>
-        <div className="bg-[#FFF59D] rounded-lg p-0 overflow-x-auto shadow-lg">
-          {filteredLeaderboard.length > 0 ? (
-            <table className="w-full text-left border-collapse">
-              <thead className="sticky top-0 bg-[#FFD54F] shadow-md">
-                <tr className="border-b border-[#8D6E63]">
-                  <th className="p-3 text-[#4E342E] font-semibold">Rank</th>
-                  <th className="p-3 text-[#4E342E] font-semibold">User ID</th>
-                  <th className="p-3 text-[#4E342E] font-semibold">Username</th>
-                  <th className="p-3 text-[#4E342E] font-semibold">Country</th>
-                  <th className="p-3 text-[#4E342E] font-semibold">Score</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredLeaderboard.map((player, index) => (
-                  <tr
-                    key={player.userId}
-                    className="border-b border-[#8D6E63] hover:bg-[#FFECB3] transition"
-                  >
-                    <td className="p-3 text-[#6D4C41] font-bold">{index + 1}</td>
-                    <td className="p-3 text-[#6D4C41]">{player.userId}</td>
-                    <td className="p-3 text-[#6D4C41]">{player.userName}</td>
-                    <td className="p-3 text-[#6D4C41]">{player.country}</td>
-                    <td className="p-3 text-[#6D4C41] font-bold">{player.score}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pt-16 p-8"> {/* Adjusted for fixed navbar */}
+      {/* Main Content Section */}
+      <div className="flex w-full gap-4">
+        {/* Left Sidebar - Current User Stats */}
+        <div className="w-1/4 bg-white p-6 rounded-xl shadow-lg border border-gray-200 flex flex-col items-center">
+          <h3 className="text-gray-700 text-2xl font-bold mb-4">Your Stats</h3>
+          {currentUser ? (
+            <div className="bg-gradient-to-r from-yellow-400 to-amber-500 p-4 rounded-lg w-full text-center shadow-md text-white">
+              <p className="font-semibold">User ID: {currentUser.userId}</p>
+              <p className="font-semibold">Username: {currentUser.userName}</p>
+              <p className="font-semibold">Country: {currentUser.country}</p>
+              <p className="font-bold text-xl mt-2">Score: {currentUser.score}</p>
+            </div>
           ) : (
-            <p className="text-[#795548] text-lg font-semibold text-center">No leaderboard data available</p>
+            <p className="text-gray-600 font-semibold">User stats not available</p>
           )}
         </div>
-      </div>
 
-      {/* Right Sidebar - Search Bar */}
-      <div className="w-1/4 bg-[#FFECB3] p-6 shadow-md flex flex-col items-center">
-        <h3 className="text-[#4E342E] text-2xl font-bold mb-4">Search Players</h3>
-        <input
-          type="text"
-          placeholder="Search by name or country..."
-          value={searchQuery}
-          onChange={handleSearch}
-          className="p-3 w-full border border-[#8D6E63] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8D6E63]"
-        />
+        {/* Main Leaderboard Section */}
+        <div className="w-2/4 flex flex-col pt-6 px-4">
+          <h2 className="text-gray-800 text-3xl font-bold text-center mb-6">Leaderboard</h2>
+          <div className="bg-white rounded-lg p-4 overflow-x-auto shadow-lg border border-gray-200">
+            {filteredLeaderboard.length > 0 ? (
+              <table className="w-full text-left border-collapse">
+                <thead className="bg-gradient-to-r from-amber-400 to-yellow-300 text-white">
+                  <tr>
+                    <th className="p-3 font-semibold">Rank</th>
+                    <th className="p-3 font-semibold">User ID</th>
+                    <th className="p-3 font-semibold">Username</th>
+                    <th className="p-3 font-semibold">Country</th>
+                    <th className="p-3 font-semibold">Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredLeaderboard.map((player, index) => (
+                    <tr
+                      key={player.userId}
+                      className="border-b border-gray-300 hover:bg-yellow-100 transition"
+                    >
+                      <td className="p-3 font-bold text-gray-700">{index + 1}</td>
+                      <td className="p-3 text-gray-700">{player.userId}</td>
+                      <td className="p-3 text-gray-700">{player.userName}</td>
+                      <td className="p-3 text-gray-700">{player.country}</td>
+                      <td className="p-3 font-bold text-gray-800">{player.score}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="text-gray-700 text-lg font-semibold text-center">No leaderboard data available</p>
+            )}
+          </div>
+        </div>
+
+        {/* Right Sidebar - Search Bar */}
+        <div className="w-1/4 bg-white p-6 rounded-xl shadow-lg border border-gray-200 flex flex-col items-center">
+          <h3 className="text-gray-700 text-2xl font-bold mb-4">Search Players</h3>
+          <input
+            type="text"
+            placeholder="Search by name or country..."
+            value={searchQuery}
+            onChange={handleSearch}
+            className="p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+          />
+        </div>
       </div>
     </div>
   );
